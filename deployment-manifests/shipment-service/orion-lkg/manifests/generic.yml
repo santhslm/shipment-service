@@ -1,0 +1,11 @@
+inherit: ../../../shared/config-server-properties-orion-lkg.yml
+memory: 3072M
+timeout: 600
+host: shipment-lkg
+instances: 3
+services:
+- Orion-RabbitMQ
+applications:
+- name: shipment-lkg
+env: 
+  JBP_CONFIG_JMX: '{enabled: true}'

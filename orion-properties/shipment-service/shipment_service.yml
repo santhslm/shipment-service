@@ -1,0 +1,121 @@
+######################################################################################################
+# Orion configuration
+######################################################################################################
+orion: 
+  build: 
+    version: "2018.06.1"
+  properties: 
+    type: common-properties
+    version: 1.0 
+
+######################################################################################################
+# Eureka client configuration
+######################################################################################################                      
+management:
+      health:
+            defaults:
+                  enabled: false
+eureka:
+      instance:
+          appname: shipment-service
+          prefer-ip-address: false
+          hostname: ${vcap.application.uris[0]}
+          nonSecurePort: 80
+          securePort: 443
+          securePortEnabled: true
+          instanceId: ${spring.application.name}:${spring.profiles.active}:${spring.application.instance_id:${random.value}}
+          metadataMap:
+            zone: u1
+      client:
+          enabled: true
+          healthcheck:
+            enabled: true
+          registerWithEureka: true
+          fetchRegistry: true
+          serviceUrl:
+              defaultZone: ${EUREKA_INSTANCE_SERVICEURL_DEFAULTZONE}
+
+DefauiltResponseSize: 50
+
+health: 
+  config: 
+    enabled: false
+######################################################################################################
+# Spring, Sleuth and zipkin configuration
+######################################################################################################                      
+spring:
+  application.name: shipment-service
+  rabbitmq:
+    addresses: localhost:5672
+  sleuth:
+    enabled: true
+    sampler: 
+      percentage: 1.0
+######################################################################################################
+# Hystrix configuration
+######################################################################################################  
+hystrix: 
+  command: 
+    default: 
+      circuitBreaker: 
+        enabled: true
+        errorThresholdPercentage: 55
+        forceClosed: false
+        forceOpen: false
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds: 100
+      execution: 
+        isolation: 
+          semaphore: 
+            maxConcurrentRequests: 100
+          thread: 
+            interruptOnCancel: false
+            interruptOnTimeout: 1000
+            timeoutInMilliseconds: 60000
+      fallback: 
+        enabled: true
+        isolation: 
+          semaphore: 
+            maxConcurrentRequests: 100
+        timeout: 
+          enabled: true
+      metrics: 
+        healthSnapshot: 
+          intervalInMilliseconds: 500
+        rollingPercentile: 
+          bucketSize: 100
+          enabled: true
+          numBuckets: 6
+          timeInMilliseconds: 60000
+        rollingStats: 
+          numBuckets: 10
+          timeInMilliseconds: 10000
+      requestCache: 
+        enabled: false
+      requestLog: 
+        enabled: false
+    downstreamOperationHystrix: 
+      circuitBreaker: 
+        errorThresholdPercentage: 55
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds: 10000
+      execution: 
+        isolation:
+          thread: 
+            timeoutInMilliseconds: 60000
+      metrics: 
+        healthSnapshot: 
+          intervalInMilliseconds: 500
+        rollingPercentile: 
+          bucketSize: 100
+          enabled: true
+          numBuckets: 6
+          timeInMilliseconds: 60000
+        rollingStats: 
+          numBuckets: 10
+          timeInMilliseconds: 10000
+      requestCache: 
+        enabled: false
+      requestLog: 
+        enabled: false
+    

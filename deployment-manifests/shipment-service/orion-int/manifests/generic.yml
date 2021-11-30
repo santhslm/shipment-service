@@ -1,0 +1,13 @@
+inherit: ../../../shared/config-server-properties-orion-int.yml
+memory: 2048M
+timeout: 600
+host: shipment-int
+instances: 2
+services:
+- Orion-RabbitMQ
+- app-dynamics-service
+applications:
+- name: shipment-int
+env: 
+ JAVA_OPTS: -Dappdynamics.agent.applicationName=orion-int -Dappdynamics.agent.tierName=ORION -Dappdynamics.agent.nodeName=shipment-int -Dappdynamics.http.proxyHost=proxy-appd-lower.sys.comcast.net -Dappdynamics.http.proxyPort=3128 -Dappdynamics.force.default.ssl.certificate.validation=false
+

@@ -1,0 +1,60 @@
+######################################################################################################
+# Orion configuration
+######################################################################################################
+orion: 
+  build: 
+    version: "2018.06.1"
+  properties: 
+    type: prdg1-properties
+    version: 1.0 
+
+
+oauth.server.url: https://websec.cable.comcast.com/as/token.oauth2
+authServer:
+  publicKey: -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArffltMPQNlx9eyY7iAcqb7hCpl9nTqPKZQj7Ydlw7sRFKqAIFdlGdkd1tGnLx5M+rf8VUNCx3xQRVvnIwaThXrERdFbjs+gjQonjuEaq1IkVGhXBwJWa56TFFcj3FXnYdtiwNUMIgKfyPgh52+5cKJxG/inYpLcdAttnA9Kw+qD/e+JUWT5oPArSXn3cp4uVjfdizW89QUUfFoY9YDJoOl59X8ONTk41qDD5xluygZomPVXsZenSGNmYJ+CaF4tuG+Eznqo9gTdNAJiFuCYcz177pwW2XAvO8Rg0C/1YS1il7pf/4s2mkfHzVAiGxlmNZDe5qaIC4Z1+wUsoYyUKPwIDAQAB-----END PUBLIC KEY-----
+  scope: orion:orion-dev
+######################################################################################################
+#Logstash Configuration
+######################################################################################################
+logstash:
+ tcpConfig:
+  hostname: orionlogst-as-a1p.sys.comcast.net
+  port: 6000
+######################################################################################################
+# Eureka client configuration
+######################################################################################################                      
+eureka:
+      instance:
+          metadataMap:
+            zone: g1
+      client:
+          serviceUrl:
+              defaultZone: ${EUREKA_INSTANCE_SERVICEURL_DEFAULTZONE},http://admin:admin@orionregistry-service-prod.g2.app.cloud.comcast.net/eureka/ 
+  
+######################################################################################################
+# Application Properties
+######################################################################################################
+
+DefauiltResponseSize: 50
+
+spring: 
+ zipkin: 
+  enabled: true
+  baseUrl: https://zipkin-prd.g1.app.cloud.comcast.net/
+
+
+downstreamname:
+  downstreamoperation:
+    endpoint: http://localhost:8080/downstreamname/downstreamoperation
+  
+######################################################################################################
+# Hystrix configuration
+######################################################################################################  
+hystrix: 
+  command: 
+    downstreamOperationHystrix: 
+      execution: 
+        isolation:
+          thread: 
+            timeoutInMilliseconds: 60000
+

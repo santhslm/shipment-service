@@ -1,0 +1,11 @@
+inherit: ../../../shared/config-server-properties-orion-flx.yml
+memory: 2048M
+timeout: 600
+host: shipment-flx
+instances: 2
+services:
+- Orion-RabbitMQ
+applications:
+- name: shipment-flx
+env: 
+  JBP_CONFIG_JMX: '{enabled: true}'

@@ -1,0 +1,12 @@
+inherit: ../../../shared/config-server-properties-orion-stg-g4.yml
+memory: 3072M
+timeout: 600
+host: shipment-stg
+instances: 3
+services:
+- Orion-RabbitMQ
+- app-dynamics-service
+applications:
+- name: shipment-stg
+env: 
+ JAVA_OPTS: -Dappdynamics.agent.applicationName=orion-stg -Dappdynamics.agent.tierName=ORION -Dappdynamics.agent.nodeName=shipment-stg -Dappdynamics.http.proxyHost=proxy-appd-lower.sys.comcast.net -Dappdynamics.http.proxyPort=3128 -Dappdynamics.force.default.ssl.certificate.validation=false

@@ -1,0 +1,6 @@
+CF_TARGET=api.g2.app.cloud.comcast.net
+CF_ORG=BSD-ORION
+CF_SPACE=ORION
+CF_APP_NAME=shipment-prod
+SCALEOVER_DURATION=2700s
+# CF_USER, CF_PASSWORD, and CF_APP_BUILD are required to be set by the CI build

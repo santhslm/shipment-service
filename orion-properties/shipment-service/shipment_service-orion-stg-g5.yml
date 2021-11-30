@@ -1,0 +1,59 @@
+######################################################################################################
+# Orion configuration
+######################################################################################################
+orion: 
+  build: 
+    version: "2018.06.1"
+  properties: 
+    type: stgg5-properties
+    version: 1.0 
+
+oauth.server.url: https://websec-stg.cable.comcast.com/as/token.oauth2
+authServer:
+  publicKey: -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsJ8pxzgVpDtGoEdt7fYFukvVss8mSwx7zt7mboCgmOAEynFYFZeWh7fIlOIC61iP5jrrPNPgnmWZaS7y7xXVhEN+fVUbqo5Xj5KrJKnfJbJYeTqlZG2fCNC1O9ER1CbAbIwMBUXNSnqbLvhxmtHrNWAdlrR0MpyVg7RPmcngw69d2kU1xLx6+xC3lQcgBv6AHPSj/ixfA1VgqNBl7ON5N61uNaunGm7Z+xdse0DjgsaSLOysiBPh30VnjQOXAIRv+MlDJaa0OCcy8HlKfjk2szRzHnwB2f/3F/VcwJAbt+iZu191vkvg+sglplfNCaUEn2ZgCY4EiDXLKv3MoDfxxQIDAQAB-----END PUBLIC KEY-----
+  scope: orion:orion-dev
+######################################################################################################
+#Logstash Configuration
+######################################################################################################
+logstash: 
+ tcpConfig: 
+  hostname: orionlogst-ch2-a1s.sys.comcast.net 
+  port: 6000
+######################################################################################################
+# Eureka client configuration
+######################################################################################################                      
+eureka:
+      instance:
+          metadataMap:
+            zone: g5
+      client:
+          serviceUrl:
+              defaultZone: ${EUREKA_INSTANCE_SERVICEURL_DEFAULTZONE},http://admin:admin@orionregistry-service-stg.g5.app.cloud.comcast.net/eureka/ 
+
+
+######################################################################################################
+# Application Properties
+######################################################################################################
+DefauiltResponseSize: 50
+
+spring: 
+ zipkin: 
+  enabled: true
+  baseUrl: https://zipkin-stg.g5.app.cloud.comcast.net/
+
+
+downstreamname:
+  downstreamoperation:
+    endpoint: http://localhost:8080/downstreamname/downstreamoperation
+
+######################################################################################################
+# Hystrix configuration
+######################################################################################################  
+hystrix: 
+  command: 
+    downstreamOperationHystrix: 
+      execution: 
+        isolation:
+          thread: 
+            timeoutInMilliseconds: 30000
+    

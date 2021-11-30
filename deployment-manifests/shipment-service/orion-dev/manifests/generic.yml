@@ -1,0 +1,9 @@
+inherit: ../../../shared/config-server-properties-orion-dev.yml
+memory: 2048M
+timeout: 600
+host: shipment-dev
+instances: 2
+services:
+- Orion-RabbitMQ
+applications:
+- name: shipment-dev

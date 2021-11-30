@@ -1,0 +1,11 @@
+inherit: ../../../shared/config-server-properties-orion-trn.yml
+memory: 2048M
+timeout: 600
+host: shipment-trn
+instances: 2
+services:
+- Orion-RabbitMQ
+applications:
+- name: shipment-trn
+env: 
+  JBP_CONFIG_JMX: '{enabled: true}'

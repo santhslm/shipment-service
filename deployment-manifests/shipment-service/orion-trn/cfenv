@@ -1,0 +1,7 @@
+CF_TARGET=api.u1.app.cloud.comcast.net
+CF_ORG=BSD-ORION-TRN
+CF_SPACE=ORION
+CF_APP_NAME=shipment-trn
+
+
+# CF_USER, CF_PASSWORD, and CF_APP_BUILD are required to be set by the CI build
