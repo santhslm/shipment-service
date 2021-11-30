@@ -1,0 +1,12 @@
+#####################################################
+List of actions after the code generation
+#####################################################
+1. Copy the orion properties files generated in folder orion_properties to local copy of orion 
+	properties and check-in in https://github.comcast.com/Orion/orion-properties
+
+2. Copy the deployment manifest files generated in folder deployment_manifests to local copy of manifest files
+	and check-in in https://github.comcast.com/Orion/deployment-manifests
+
+3. Update README.md file with a brief description about the service, list of operations and its purpose and corresponding wiki link
+
+4. In \src\main\java\com\comcast\tnms\com.comcast.orion.shipment.audit\RestTemplateLoggingInterceptor.java and AuditHandler.java, replace the string 'DOWNSTREAM_SYSTEM' and 'UPSTREAM_SYSTEM' with actual values. 

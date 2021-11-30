@@ -1,0 +1,269 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.4.RELEASE'        
+        artifactId = 'shipment-service'
+        verifier_version = '2.0.2.RELEASE'
+    }
+	repositories {
+	   maven {
+			url "${artifactory_url}/plugins-release"
+			credentials {
+				username = "${artifactory_user}"
+				password = "${artifactory_password}"
+			}
+		}
+		//mavenCentral()
+		//jcenter()
+	}
+	dependencies {
+		classpath ("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath ('org.springframework.build.gradle:propdeps-plugin:0.0.7')
+		classpath ('org.jfrog.buildinfo:build-info-extractor-gradle:4+')
+		classpath ('no.nils:wsdl2java:0.10')
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
+		classpath ('org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5-rc1')
+		//classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${verifier_version}"
+	}
+}
+
+//plugins {
+		//id "net.ltgt.apt-idea" version "0.17"
+//}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+//apply plugin: 'findbugs'
+apply plugin: 'jacoco'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+apply plugin: 'org.sonarqube'
+//apply plugin: 'spring-cloud-contract'
+apply plugin: 'project-report'
+
+group = 'com.comcast.orion'
+version = '0.1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    baseName = 'shipment-service'
+    version = version
+}
+
+ext {
+	springCloudVersion = 'Greenwich.SR2'
+}
+
+
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'	
+	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'io.micrometer:micrometer-registry-influx'
+    implementation 'org.springframework.cloud:spring-cloud-config-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+    
+	//Cloud Connector
+    compile 'org.springframework.cloud:spring-cloud-cloudfoundry-connector:2.0.0.RELEASE' 
+    compile 'org.springframework.cloud:spring-cloud-spring-service-connector:2.0.0.RELEASE'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter', version: '2.0.0.RELEASE'
+    
+       
+    //DATABASE  
+    //compile('org.springframework.boot:spring-boot-starter-data-jpa'){
+       // exclude group: "org.springframework", module: "spring-jms"     
+       // exclude group: "org.springframework.boot", module: "spring-boot-starter-web-services"
+    //}
+	//compile ('mysql:mysql-connector-java')
+	//compile 'mysql:mysql-connector-java:5.1.31'
+	//compile('org.springframework.boot:spring-boot-starter-data-jpa')  
+       
+	//mapper	
+	compile group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.2.0.Final'
+    compile group: 'org.mapstruct', name: 'mapstruct-jdk8', version: '1.2.0.Final'
+	
+	//Logging dependencies
+	compile('org.slf4j:slf4j-api:1.7.24')
+	compile('org.slf4j:jcl-over-slf4j:1.7.24')
+	//compile('ch.qos.logback:logback-classic:1.1.11')
+	compile('ch.qos.logback:logback-classic:1.2.3')
+    compile('net.logstash.logback:logstash-logback-encoder:5.0')
+	
+    //Testing
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.4.RELEASE'
+    //testCompile("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
+    
+    
+    //testCompile ("org.springframework.cloud:spring-cloud-starter-contract-verifier"){
+    	//exclude group: "org.codehaus.groovy"
+    //}
+    
+    testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '1.18'
+    testCompile group: 'io.rest-assured', name: 'spring-mock-mvc', version: '3.0.0'
+    
+    
+    testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '2.23.2', ext: 'pom'
+    testCompile("org.codehaus.groovy:groovy:2.4.12")
+    testCompile("org.codehaus.groovy:groovy-json:2.4.12")
+    testCompile("org.codehaus.groovy:groovy-xml:2.4.12")
+    testCompile("org.codehaus.groovy:groovy-nio:2.4.12")
+	testCompile("org.mockito:mockito-core:1.10.19")
+	testCompile("org.powermock:powermock-api-mockito:1.7.4")
+	testCompile("org.powermock:powermock-module-junit4:1.7.4")
+	testCompile ('org.hamcrest:hamcrest-all:1.3')
+	
+	
+    //Security dependencies
+    compile ('io.jsonwebtoken:jjwt:0.9.1')
+    compile(group: 'com.comcast.xsp', name: 'xsp-security', version: '3.0.0-b2'){
+        exclude group: "org.springframework", module: "spring-jms"     
+    }
+    
+    //exclude group: "com.comcast.xsp", module: "xsp-service-core"
+	//compile group: 'org.springframework.ws', name: 'spring-ws-security', version: '3.0.0.RELEASE'
+    
+    
+ configurations.all {
+  	//exclude group: "org.springframework.ws", module: "spring-ws-security"
+}
+	
+	//JSON dependencies
+    compile ('javax.validation:validation-api:2.0.0.Final')
+   //compile ('javax.validation:validation-api:2.0.1.Final') 
+    compile ('org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.4.34')
+    
+    compile("org.springframework.boot:spring-boot-starter-integration:${springBootVersion}"){
+        exclude group: "org.springframework.integration", module: "spring-integration-java-dsl"     
+    }
+    
+    //compile(group: 'com.comcast.orion.logging', name: 'auditlog-logback-appender', version: '1.7.2')
+    //compile(group: 'com.comcast.orion.logging', name: 'auditlog-logback-orion-appender', version: '1.0.12')
+    compile(group: 'com.comcast.orion.logging', name: 'auditlog-logback-orion-appender', version: '4.0.17')
+    
+	//implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	compile('org.springframework.boot:spring-boot-starter-amqp:2.1.4.RELEASE')
+	
+	compile('org.aspectj:aspectjweaver:1.8.9') 
+	
+	compile group: 'org.apache.cxf', name: 'cxf-rt-features-logging', version: '3.3.0'
+	
+	
+	compile fileTree(dir: 'src/main/downstream', include: '*.jar')
+
+	
+	//compile('io.springfox:springfox-data-rest:2.9.2')
+	compile('io.springfox:springfox-bean-validators:2.9.2')
+	compile('io.springfox:springfox-swagger2:2.9.2')
+	compile('io.springfox:springfox-swagger-ui:2.9.2')
+	
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+//contracts {
+	//basePackageForTests = 'com.comcast.orion.shipment'
+	//baseClassForTests = 'com.comcast.orion.shipment.StubGenerator'
+//}
+compileJava {
+    options.compilerArgs = [
+			'-Amapstruct.suppressGeneratorTimestamp=true',
+			'-Amapstruct.suppressGeneratorVersionInfoComment=true'
+    ]
+}
+
+
+tasks.withType(Test) {
+	// reports.html.destination = file("${reporting.baseDir}/${name}")
+	enabled = false;
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/utils/**',
+                     '**/domain/**',
+                     '**/comps/**',
+                     '**/onp/**',
+                     '**/vms/**',
+                     '**/omw/**',
+					 '**/default/**',
+					 '**/springContract/**',
+					 '**/shipment/ShipmentApplication**'
+               ])
+
+        })
+
+    }
+
+}
+repositories {
+	mavenLocal()
+	maven {
+			url "${artifactory_url}/plugins-release"
+			credentials {
+				username = "${artifactory_user}"
+				password = "${artifactory_password}"
+			}
+		}
+		
+}
+
+String publishingRepo = jar.version.endsWith('SNAPSHOT') ? 'libs-snapshot-local' : 'libs-release-local'
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = "${publishingRepo}"
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+        }
+        defaults {
+            publications ('mavenJava')
+            publishBuildInfo = true
+            publishArtifacts = true
+            publishPom = true
+        }
+
+    }
+    resolve {
+        repository {
+            repoKey = 'libs-release'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+    }
+}
+publishing.repositories {
+    maven {
+        credentials {
+            username "${artifactory_user}"
+            password "${artifactory_password}"
+        }
+        url "${artifactory_contextUrl}/${publishingRepo}"
+    }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.10.3'
+}
+
+ext.jarPath = "-Dspring.config.location=moco-override.properties build/libs/shipment-service-0.1.0.jar"
