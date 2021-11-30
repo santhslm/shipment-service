@@ -1,0 +1,81 @@
+{
+   "shipmentOrder":{
+      "id":301,
+      "purchaseOrderNumber":"ORION-PO-123",
+      "compsOrderNumber":"ABC-5392",
+      "vendorOrderNumber":"O-1237186",
+      "orderStatus":"CLOSED",
+      "vendorOrderStatus":"CANCELLED",
+      "externalTransactionId":"111122",
+      "createdBy":"Amdocs",
+      "shipmentOrderDetail":{
+         "id":219,
+         "shipmentSystem":"NetX",
+         "productType":"BVE",
+         "specialInstructions":"Please ship ASAP",
+         "shippingOptions":{
+            "method":"Ground",
+            "shipper":"UPS",
+            "signatureRequired":true
+         }
+      },
+      "shippingAddress":{
+         "id":231,
+         "company":"PCF",
+         "firstName":"Hello",
+         "lastName":"World",
+         "phone":"9871541665",
+         "address":{
+            "id":239,
+            "addressLine1":"143 union blvd",
+            "city":"lakewood",
+            "state":"CO",
+            "zip":"80123"
+         }
+      },
+      "additionalAttributes":[
+         {
+            "id":401,
+            "name":"VMSDesignId",
+            "value":"46764488"
+         },
+         {
+            "id":403,
+            "name":"ServiceId",
+            "value":"Serv12345"
+         }
+      ],
+      "lineItems":[
+         {
+            "id":569,
+            "deviceMake":"Polycom",
+            "deviceModel":"IP Phone",
+            "deviceType":"SoundPoint 670 HD",
+            "resourceId":"123456799",
+            "deviceName":"Polycom SoundPoint 670 HD",
+            "firstName":"DIRAJ",
+            "lastName":"PRAVEEN"
+         },
+         {
+            "id":571,
+            "deviceMake":"Polycom",
+            "deviceModel":"IP Phone",
+            "deviceType":"VVX 500",
+            "resourceId":"12345666",
+            "deviceName":"Polycom SoundPoint VVX 500 HD",
+            "firstName":"John",
+            "lastName":"last1"
+         },
+         {
+            "id":567,
+            "deviceMake":"Polycom",
+            "deviceModel":"IP Phone",
+            "deviceType":"VVX 310",
+            "resourceId":"12345688",
+            "deviceName":"Polycom VVX 310",
+            "firstName":"BHANVITHA",
+            "lastName":"last2"
+         }
+      ]
+   }
+}

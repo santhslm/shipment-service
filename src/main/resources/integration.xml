@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd 
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<int:gateway id="shipmentServiceGateway"
+		service-interface="com.comcast.orion.shipment.integration.ShipmentServiceGateway"
+		default-reply-channel="gatewayOutputChannel"
+		error-channel="shipmentOrderErrorChannel">
+		<int:method name="createOrder"
+			request-channel="createShipmentOrderChannel" />
+		<int:method name="cancelOrder"
+			request-channel="cancelShipmentOrderChannel" />
+	</int:gateway>
+	
+	<int:channel id="gatewayOutputChannel" />
+	
+	<int:channel id="sendOnpNotification" />
+	
+	<int:channel id="createShipmentOrderChannel" />
+	
+	<int:channel id="cancelShipmentOrderChannel" />
+	
+	<int:channel id="shipmentOrderErrorChannel" />
+	
+	<int:channel id="aggregatorCancelRequestChannel" />
+	
+	<int:channel id="cancelResponseRouteChannel" />
+	
+	<int:channel id="cancelSuccessResponseRouteChannel"/>
+	
+	<int:channel id="cancelShipmentOrderTerminateChannel"/>
+	
+	<int:channel id="cancelOrderCompsChannel">
+		<int:dispatcher task-executor="threadPoolTaskExecutor" />
+	</int:channel>
+
+	<int:channel id="fetchShipmentDataChannel">
+		<int:dispatcher task-executor="threadPoolTaskExecutor" />
+	</int:channel>
+
+	<!-- Start of Shipment Create Order Channel -->
+
+	<int:chain input-channel="createShipmentOrderChannel"
+		output-channel="sendOnpNotification">
+		<int:header-enricher default-overwrite="true">
+			<int:header name="shipmentOrderRequest"
+				expression="payload" />
+			<int:header name="orderType" value="create" />
+		</int:header-enricher>
+		<int:service-activator
+			ref="shipmentDataServiceActivator"
+			method="constructShipmentDataRequest" />
+		<int:service-activator
+			ref="shipmentDataServiceActivator" method="retriveDeviceDetails" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="shipmentDataResponse"
+				expression="payload" />
+		</int:header-enricher>
+		<int:service-activator ref="vmsServiceActivator"
+			method="constructVmsRequest" />
+		<int:service-activator ref="vmsServiceActivator"
+			method="bveRetriveDevices" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="vmsResponse" expression="payload" />
+		</int:header-enricher>
+		<int:service-activator
+			ref="shipmentServiceAggregator"
+			method="aggregateCreateOrderRequestForComps" />
+
+		<int:service-activator
+			ref="compsServiceActivator" method="createOrder" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="compsResponse" expression="payload" />
+			<int:header name="source"
+				value="${service.shipmentData.sourceSystem}" />
+		</int:header-enricher>
+		<int:service-activator
+			ref="shipmentDataServiceActivator"
+			method="constructShipmentDataObjectToPersist" />
+
+		<int:service-activator
+			ref="shipmentDataServiceActivator" method="persistShipmentOrder" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="shipmentOrder" expression="payload" />
+			<int:header name="notificationType"
+				value="${service.onp.successnotificationType}" />
+			<int:header name="status"
+				value="${service.onp.successStatus}" />
+		</int:header-enricher>
+
+		<int:service-activator ref="onpServiceActivator"
+			method="constructSendNotificationObject" />
+
+		<int:object-to-json-transformer />
+	</int:chain>
+
+
+	<!-- Start of Create Shipment Error Channel -->
+	<int:chain input-channel="shipmentOrderErrorChannel"
+		output-channel="sendOnpNotification">
+		<int:service-activator
+			ref="shipmentServiceActivator" method="restoreMessage" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="exceptionMsg" expression="payload" />
+		</int:header-enricher>
+		<int:filter expression="headers.get('orderType')!='cancel'"
+			throw-exception-on-rejection="false"
+			discard-channel="cancelShipmentOrderTerminateChannel" />
+
+		<int:service-activator ref="onpServiceActivator"
+			method="constructONPRequest" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="notificationType"
+				value="${service.onp.failurenotificationType}" />
+			<int:header name="status"
+				value="${service.onp.failureStatus}" />
+		</int:header-enricher>
+		<int:object-to-json-transformer />
+	</int:chain>
+
+	<int:chain input-channel="sendOnpNotification">
+		<int:header-enricher default-overwrite="true">
+			<int:header name="source" value="${service.onp.source}" />
+			<int:header name="eventName"
+				value="${service.onp.shipmentStatusEventName}" />
+		</int:header-enricher>
+		<int:service-activator ref="onpServiceActivator"
+			method="sendNotification" />
+		<int:service-activator
+			ref="shipmentServiceActivator" method="terminate" />
+	</int:chain>
+
+	
+
+	<!-- End of Create Shipment Channel -->
+
+
+	<!-- Start of Cancel Shipment Order Channel -->
+	<int:chain input-channel="cancelShipmentOrderChannel">
+		<int:header-enricher default-overwrite="true">
+			<int:header name="cancelOrderRequst" expression="payload" />
+			<int:header name="orderType" value="cancel" />
+		</int:header-enricher>
+		<int:splitter ref="shipmentServiceSplitter"
+			method="splitForCancelOrder" />
+		<int:recipient-list-router
+			apply-sequence="false">
+			<int:recipient
+				selector-expression="headers.get('sequenceNumber') 
+		== 1"
+				channel="cancelOrderCompsChannel" />
+			<int:recipient
+				selector-expression="headers.get('sequenceNumber') 
+		== 2"
+				channel="fetchShipmentDataChannel" />
+		</int:recipient-list-router>
+
+	</int:chain>
+
+	<int:chain input-channel="cancelOrderCompsChannel"
+		output-channel="aggregatorCancelRequestChannel">
+		<int:service-activator
+			ref="compsServiceActivator" method="cancelOrder" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="compsResponse" expression="payload" />
+		</int:header-enricher>
+	</int:chain>
+
+	<int:chain input-channel="fetchShipmentDataChannel"
+		output-channel="aggregatorCancelRequestChannel">
+		<int:service-activator
+			ref="shipmentDataServiceActivator" method="getOrderDetails" />
+		<int:header-enricher default-overwrite="true">
+			<int:header name="shipmentOrder" expression="payload" />
+		</int:header-enricher>
+	</int:chain>
+
+	
+
+	<int:aggregator
+		input-channel="aggregatorCancelRequestChannel"
+		output-channel="cancelResponseRouteChannel"
+		ref="shipmentServiceAggregator" method="aggregateCancelOrder"
+		send-partial-result-on-expiry="false"
+		message-store="simpleMessageStore" />
+
+
+	<int:chain id="cancelResponseRoute"
+		input-channel="cancelResponseRouteChannel">
+		<int:payload-type-router>
+			<int:mapping
+				type="com.comcast.orion.shipment.omw.response.CancelShipmentOrderResponse"
+				channel="gatewayOutputChannel" />
+			<int:mapping
+				type="com.comcast.orion.shipment.onp.ShipmentStatusNotification"
+				channel="cancelSuccessResponseRouteChannel" />
+		</int:payload-type-router>
+	</int:chain>
+
+	<int:chain input-channel="cancelSuccessResponseRouteChannel"
+		output-channel="cancelShipmentOrderTerminateChannel">
+		<int:header-enricher default-overwrite="true">
+			<int:header name="notificationType"
+				value="${service.onp.cancelnotificationType}" />
+			<int:header name="status"
+				value="${service.onp.successStatus}" />
+			<int:header name="source" value="${service.onp.source}" />
+			<int:header name="eventName"
+				value="${service.onp.shipmentStatusEventName}" />
+		</int:header-enricher>
+		<int:object-to-json-transformer />
+		<int:service-activator ref="onpServiceActivator"
+			method="sendNotification" />
+		<int:service-activator
+			ref="shipmentDataServiceActivator" method="updateOrderStatus" />
+	</int:chain>
+
+
+	<int:service-activator
+		ref="shipmentServiceActivator" method="cancelTerminate"
+		input-channel="cancelShipmentOrderTerminateChannel" />
+
+	<!-- End of Cancel Shipment Order Channel -->
+
+	<bean id="threadPoolTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize"
+			value="${int.threadPoolTaskExecutor.corePoolSize}" />
+		<property name="maxPoolSize"
+			value="${int.threadPoolTaskExecutor.maxPoolSize}" />
+		<property name="TaskDecorator" ref="taskdecartor" />
+		<property name="WaitForTasksToCompleteOnShutdown"
+			value="true" />
+
+	</bean>
+	<bean id="taskdecartor"
+		class="com.comcast.orion.shipment.config.MdcTaskDecorator" />
+	<bean id="simpleMessageStore"
+		class="org.springframework.integration.store.SimpleMessageStore" />
+</beans>

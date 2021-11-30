@@ -1,0 +1,9 @@
+{
+  "cancelShipmentOrder": [
+    {
+      "orderNumber": "O-1235461",
+      "productType": "BVE",
+      "shipmentSystem": "NetX"
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "createShipmentOrder"
+  ],
+  "properties": {
+    "createShipmentOrder": {
+      "$id": "#/properties/createShipmentOrder",
+      "type": "array",
+      "title": "The Createshipmentorder Schema",
+      "items": {
+        "$id": "#/properties/createShipmentOrder/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "purchaseOrderNumber",
+          "shippingOptions",
+          "shippingAddress",
+          "additionalAttributes",
+          "lineItems"
+        ],
+        "properties": {
+          "purchaseOrderNumber": {
+            "$id": "#/properties/createShipmentOrder/items/properties/purchaseOrderNumber",
+            "type": "string",
+            "title": "The Purchaseordernumber Schema",
+            "default": "",
+            "examples": "ORION-PO-123",
+            "pattern": "^(.*)$"
+          },
+          "shipmentSystem": {
+            "$id": "#/properties/createShipmentOrder/items/properties/shipmentSystem",
+            "type": "string",
+            "title": "The Shipmentsystem Schema",
+            "default": "NetX",
+            "examples": "NetX",
+            "enum": [
+              "NetX"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "productType": {
+            "$id": "#/properties/createShipmentOrder/items/properties/productType",
+            "type": "string",
+            "title": "The Producttype Schema",
+            "default": "BVE",
+            "examples": "BVE",
+            "enum": [
+              "BVE"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "specialInstructions": {
+            "$id": "#/properties/createShipmentOrder/items/properties/specialInstructions",
+            "type": "string",
+            "title": "The Specialinstructions Schema",
+            "default": "",
+            "examples": "Please ship ASAP",
+            "pattern": "^(.*)$"
+          },
+          "shippingOptions": {
+            "$id": "#/properties/createShipmentOrder/items/properties/shippingOptions",
+            "type": "object",
+            "title": "The Shippingoptions Schema",
+            "required": [
+              "method",
+              "shipper",
+              "signatureRequired"
+            ],
+            "properties": {
+              "method": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingOptions/properties/method",
+                "type": "string",
+                "title": "The Method Schema",
+                "default": "",
+                "examples": "Ground",
+                "enum": [
+                  "Ground",
+                  "3-day",
+                  "2-day",
+                  "Overnight",
+                  "Priority Overnight",
+                  "Overnight Early AM"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "shipper": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingOptions/properties/shipper",
+                "type": "string",
+                "title": "The Shipper Schema",
+                "default": "",
+                "examples": "UPS",
+                "enum": [
+                  "UPS"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "signatureRequired": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingOptions/properties/signatureRequired",
+                "type": "boolean",
+                "title": "The Signaturerequired Schema",
+                "default": false,
+                "examples": [
+                  true
+                ]
+              }
+            }
+          },
+          "shippingAddress": {
+            "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress",
+            "type": "object",
+            "title": "The Shippingaddress Schema",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "company": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/company",
+                "type": "string",
+                "title": "The Company Schema",
+                "default": "",
+                "examples": "PCF",
+                "pattern": "^(.*)$"
+              },
+              "firstName": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/firstName",
+                "type": "string",
+                "title": "The Firstname Schema",
+                "default": "",
+                "examples": "first",
+                "pattern": "^(.*)$"
+              },
+              "lastName": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/lastName",
+                "type": "string",
+                "title": "The Lastname Schema",
+                "default": "",
+                "examples": "last",
+                "pattern": "^(.*)$"
+              },
+              "phone": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/phone",
+                "type": "string",
+                "title": "The Phone Schema",
+                "default": "",
+                "examples": "9871541665",
+                "pattern": "^(.*)$"
+              },
+              "address": {
+                "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/address",
+                "type": "object",
+                "title": "The Address Schema",
+                "required": [
+                  "addressLine1",
+                  "city",
+                  "state",
+                  "zip"
+                ],
+                "properties": {
+                  "addressLine1": {
+                    "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/address/properties/addressLine1",
+                    "type": "string",
+                    "title": "The Addressline1 Schema",
+                    "default": "",
+                    "examples": "143 union blvd",
+                    "pattern": "^(.*)$"
+                  },
+                  "addressLine2": {
+                    "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/address/properties/addressLine2",
+                    "type": "string",
+                    "title": "The Addressline2 Schema",
+                    "default": "",
+                    "examples": "suite 100",
+                    "pattern": "^(.*)$"
+                  },
+                  "city": {
+                    "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/address/properties/city",
+                    "type": "string",
+                    "title": "The City Schema",
+                    "default": "",
+                    "examples": "lakewood",
+                    "pattern": "^(.*)$"
+                  },
+                  "state": {
+                    "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/address/properties/state",
+                    "type": "string",
+                    "title": "The State Schema",
+                    "default": "",
+                    "examples": "CO",
+                    "pattern": "^(.*)$",
+                    "maxLength": 2,
+                    "minLength": 2
+                  },
+                  "zip": {
+                    "$id": "#/properties/createShipmentOrder/items/properties/shippingAddress/properties/address/properties/zip",
+                    "type": "string",
+                    "title": "The Zip Schema",
+                    "default": "",
+                    "examples": "80123",
+                    "pattern": "^(.*)$",
+                    "maxLength": 5,
+                    "minLength": 5
+                  }
+                }
+              }
+            }
+          },
+          "additionalAttributes": {
+            "$id": "#/properties/createShipmentOrder/items/properties/additionalAttributes",
+            "type": "array",
+            "title": "The Additionalattributes Schema",
+            "items": {
+              "$id": "#/properties/createShipmentOrder/items/properties/additionalAttributes/items",
+              "type": "object",
+              "title": "The Items Schema",
+              "required": [
+                "name",
+                "value"
+              ],
+              "properties": {
+                "name": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/additionalAttributes/items/properties/name",
+                  "type": "string",
+                  "title": "The Name Schema",
+                  "default": "",
+                  "examples": "VMSDesignId",
+                  "pattern": "^(.*)$"
+                },
+                "value": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/additionalAttributes/items/properties/value",
+                  "type": "string",
+                  "title": "The Value Schema",
+                  "default": "",
+                  "examples": "123",
+                  "pattern": "^(.*)$"
+                }
+              }
+            }
+          },
+          "lineItems": {
+            "$id": "#/properties/createShipmentOrder/items/properties/lineItems",
+            "type": "array",
+            "title": "The Lineitems Schema",
+            "items": {
+              "$id": "#/properties/createShipmentOrder/items/properties/lineItems/items",
+              "type": "object",
+              "title": "The Items Schema",
+              "required": [
+                "deviceMake",
+                "deviceModel",
+                "deviceType",
+                "resourceId"
+              ],
+              "properties": {
+                "deviceMake": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/lineItems/items/properties/deviceMake",
+                  "type": "string",
+                  "title": "The Devicemake Schema",
+                  "default": "",
+                  "examples": "ALGO",
+                  "pattern": "^(.*)$"
+                },
+                "deviceModel": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/lineItems/items/properties/deviceModel",
+                  "type": "string",
+                  "title": "The Devicemodel Schema",
+                  "default": "",
+                  "examples": "8180",
+                  "pattern": "^(.*)$"
+                },
+                "deviceType": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/lineItems/items/properties/deviceType",
+                  "type": "string",
+                  "title": "The Devicetype Schema",
+                  "default": "",
+                  "examples": "Loud Ringer",
+                  "pattern": "^(.*)$"
+                },
+                "resourceId": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/lineItems/items/properties/resourceId",
+                  "type": "string",
+                  "title": "The resourceId Schema",
+                  "default": "0",
+                  "examples": "124565656565"
+                },
+                "quantity": {
+                  "$id": "#/properties/createShipmentOrder/items/properties/lineItems/items/properties/quantity",
+                  "type": "int",
+                  "title": "The quantity of Product",
+                  "default": 1,
+                  "examples": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "cancelShipmentOrder": [
+    {
+      "productType": "BVE",
+      "shipmentSystem": "NetX"
+    }
+  ]
+}

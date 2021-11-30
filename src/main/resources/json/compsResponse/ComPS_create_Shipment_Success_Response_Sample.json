@@ -1,0 +1,15 @@
+{
+  "orderNumber": "ABC-4154",
+  "vendorOrderId": "O-1232517",
+  "orderStatus": "Open",
+  "transaction": {
+    "transactionNumber": "6304",
+    "externalTransactionId": "123423aaa"
+  },
+  "status": {
+    "resultCode": "00000",
+    "messages": [
+      "Success"
+    ]
+  }
+}

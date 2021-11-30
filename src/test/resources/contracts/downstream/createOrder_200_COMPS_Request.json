@@ -1,0 +1,41 @@
+{
+   "createOrderAttr":{
+      "purchaseOrderNumber":"ORION-PO-123",
+      "shippingOptions":{
+         "method":"Ground",
+         "shipper":"UPS",
+         "signature":true
+      },
+      "shippingAddress":{
+         "company":"PCF",
+         "firstName":"Hello",
+         "lastName":"World",
+         "phone":"9871541665",
+         "address":{
+            "addressLine1":"143 union blvd",
+            "city":"lakewood",
+            "state":"CO",
+            "zip":"80123"
+         }
+      },
+      "lineItems":{
+         "lineItem":[
+            {
+               "device":"Polycom SoundPoint VVX 500 HD",
+               "firstName":"John",
+               "lastName":"last1"
+            },
+            {
+               "device":"Polycom VVX 310",
+               "firstName":"BHANVITHA",
+               "lastName":"last2"
+            },
+            {
+               "device":"Polycom SoundPoint 670 HD",
+               "firstName":"DIRAJ",
+               "lastName":"PRAVEEN"
+            }
+         ]
+      }
+   }
+}

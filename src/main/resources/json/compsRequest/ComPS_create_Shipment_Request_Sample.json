@@ -1,0 +1,45 @@
+{
+  "createOrderAttr": {
+    "purchaseOrderNumber": "ORION-PO-123",
+    "specialInstructions": "Quick Transaction",
+    "orderType": "OTT",
+    "shippingOptions": {
+      "method": "Ground",
+      "shipper": "UPS",
+      "signature": true
+    },
+    "shippingAddress": {
+      "company": "PCF",
+      "firstName": "Hello",
+      "lastName": "World",
+      "phone": "9871541665",
+      "address": {
+        "addressLine1": "143 union blvd",
+        "city": "lakewood",
+        "state": "CO",
+        "zip": "80123"
+      }
+    },
+    "lineItems": {
+      "lineItem": [
+        {
+          "device": "ALGO 8180 Loud Ringer"
+        },
+        {
+          "device": "ALGO Strobe Light Add-On - Clear",
+          "firstName": "testfirst2",
+          "lastName": "Test22"
+        },
+        {
+          "device": "ALGO Strobe Light Add-On - Color"
+        },
+        {
+          "device": "AudioCodes MP-114 ATA"
+        },
+        {
+          "device": "ALGO Weatherproof Loud Horn Add-On"
+        }
+      ]
+    }
+  }
+}

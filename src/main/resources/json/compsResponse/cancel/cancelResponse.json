@@ -1,0 +1,12 @@
+{
+  "status": {
+    "messages": [
+      "string"
+    ],
+    "resultCode": "string"
+  },
+  "transaction": {
+    "externalTransactionId": "string",
+    "transactionNumber": "string"
+  }
+}

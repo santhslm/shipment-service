@@ -1,0 +1,51 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "cancelShipmentOrder"
+  ],
+  "properties": {
+    "cancelShipmentOrder": {
+      "$id": "#/properties/cancelShipmentOrder",
+      "type": "array",
+      "title": "The cancelShipmentOrder Schema",
+      "items": {
+        "$id": "#/properties/cancelShipmentOrder/items/properties",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "orderNumber"
+        ],
+        "properties": {
+          "orderNumber": {
+            "$id": "#/properties/cancelShipmentOrder/items/properties/orderNumber",
+            "type": "string",
+            "title": "The orderNumber Schema",
+            "default": "",
+            "examples": "ABC-123123",
+            "pattern": "^(.*)$"
+          },
+          "shipmentSystem": {
+            "$id": "#/properties/cancelShipmentOrder/items/properties/shipmentSystem",
+            "type": "string",
+            "title": "The shipmentSystem Schema",
+            "default": "NetX",
+            "examples": "NetX",
+            "pattern": "^(.*)$"
+          },
+          "productType": {
+            "$id": "#/properties/cancelShipmentOrder/items/properties/productType",
+            "type": "string",
+            "title": "The productType Schema",
+            "default": "BVE",
+            "examples": "BVE",
+            "pattern": "^(.*)$"
+          }
+        }
+      }
+    }
+  }
+}

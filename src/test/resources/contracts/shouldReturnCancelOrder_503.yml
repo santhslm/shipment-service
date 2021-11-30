@@ -1,0 +1,14 @@
+name: "should return CancelOrder connectivity Error Response"
+request:
+  method: DELETE
+  url: /shipmentService/v1/cancelShipmentOrder
+  bodyFromFile: cancelOrder_503_Request.json
+  headers:
+    Content-Type: application/json
+    trackingId: 111122
+    sourceSystemId: Netx
+response:
+  status: 503
+  bodyFromFile: cancelOrder_503_Response.json
+  headers:
+    Content-Type: application/json;charset=UTF-8

@@ -1,0 +1,315 @@
+{
+	"definitions": {},
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://example.com/root.json",
+	"type": "object",
+	"title": "The Root Schema",
+	"required": [
+		"status",
+		"orderNumber",
+		"orderStatus",
+		"transaction"
+	],
+	"properties": {
+		"status": {
+			"$id": "#/properties/status",
+			"type": "string",
+			"title": "The Status Schema",
+			"default": "",
+			"examples": [
+				"SUCCESS"
+			],
+			"pattern": "^(.*)$"
+		},
+		"orderNumber": {
+			"$id": "#/properties/orderNumber",
+			"type": "string",
+			"title": "The Ordernumber Schema",
+			"default": "",
+			"examples": [
+				"ABC-3448"
+			],
+			"pattern": "^(.*)$"
+		},
+		"orderStatus": {
+			"$id": "#/properties/orderStatus",
+			"type": "string",
+			"title": "The Orderstatus Schema",
+			"default": "",
+			"examples": [
+				"Open"
+			],
+			"pattern": "^(.*)$"
+		},
+		"transaction": {
+			"$id": "#/properties/transaction",
+			"type": "object",
+			"title": "The Transaction Schema",
+			"required": [
+				"externalTransactionId",
+				"purchaseOrderNumber"
+			],
+			"properties": {
+				"externalTransactionId": {
+					"$id": "#/properties/transaction/properties/externalTransactionId",
+					"type": "string",
+					"title": "The Externaltransactionid Schema",
+					"default": "",
+					"examples": [
+						"Trans1"
+					],
+					"pattern": "^(.*)$"
+				},
+				"purchaseOrderNumber": {
+					"$id": "#/properties/transaction/properties/purchaseOrderNumber",
+					"type": "string",
+					"title": "The Purchaseordernumber Schema",
+					"default": "",
+					"examples": [
+						"ORION-PO-123"
+					],
+					"pattern": "^(.*)$"
+				}
+			}
+		},
+		"errors": {
+			"$id": "#/properties/errors",
+			"type": "array",
+			"title": "The Errors Schema",
+			"items": {
+				"$id": "#/properties/errors/items",
+				"type": "object",
+				"title": "The Items Schema",
+				"required": [
+					"code",
+					"message"
+				],
+				"properties": {
+					"code": {
+						"$id": "#/properties/errors/items/properties/code",
+						"type": "string",
+						"title": "The Code Schema",
+						"default": "",
+						"examples": [
+							"BUSINESS_ERROR_VMS"
+						],
+						"pattern": "^(.*)$"
+					},
+					"message": {
+						"$id": "#/properties/errors/items/properties/message",
+						"type": "string",
+						"title": "The Message Schema",
+						"default": "",
+						"examples": [
+							"Not able to pull required details from VMS"
+						],
+						"pattern": "^(.*)$"
+					}
+				}
+			}
+		},
+		"orderInfo": {
+			"$id": "#/properties/orderInfo",
+			"type": "object",
+			"title": "The Orderinfo Schema",
+			"properties": {
+				"lineItems": {
+					"$id": "#/properties/orderInfo/properties/lineItems",
+					"type": "array",
+					"title": "The Lineitems Schema",
+					"items": {
+						"$id": "#/properties/orderInfo/properties/lineItems/items",
+						"type": "object",
+						"title": "The Items Schema",
+						"required": [
+							"deviceMake",
+							"deviceModel",
+							"deviceType",
+							"resourceId"
+						],
+						"properties": {
+							"deviceMake": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/deviceMake",
+								"type": "string",
+								"title": "The Devicemake Schema",
+								"default": "",
+								"examples": [
+									"ALGO"
+								],
+								"pattern": "^(.*)$"
+							},
+							"deviceModel": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/deviceModel",
+								"type": "string",
+								"title": "The Devicemodel Schema",
+								"default": "",
+								"examples": [
+									"8180"
+								],
+								"pattern": "^(.*)$"
+							},
+							"deviceType": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/deviceType",
+								"type": "string",
+								"title": "The Devicetype Schema",
+								"default": "",
+								"examples": [
+									"Loud Ringer"
+								],
+								"pattern": "^(.*)$"
+							},
+							"firstName": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/firstName",
+								"type": "string",
+								"title": "The Firstname Schema",
+								"default": "",
+								"examples": [
+									"ESG"
+								],
+								"pattern": "^(.*)$"
+							},
+							"lastName": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/lastName",
+								"type": "string",
+								"title": "The Lastname Schema",
+								"default": "",
+								"examples": [
+									"ESG"
+								],
+								"pattern": "^(.*)$"
+							},
+							"resourceId": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/resourceId",
+								"type": "string",
+								"title": "The Resourceid Schema",
+								"default": "",
+								"examples": [
+									"3545345"
+								],
+								"pattern": "^(.*)$"
+							},
+							"deviceMacAddress": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/deviceMacAddress",
+								"type": "string",
+								"title": "The Devicemacaddress Schema",
+								"default": "",
+								"examples": [
+									"AA:90:89:SD:32"
+								],
+								"pattern": "^(.*)$"
+							},
+							"deviceSerialNumber": {
+								"$id": "#/properties/orderInfo/properties/lineItems/items/properties/deviceSerialNumber",
+								"type": "string",
+								"title": "The deviceSerialNumber Schema",
+								"default": "",
+								"examples": [
+									"343456675676576"
+								],
+								"pattern": "^(.*)$"
+							}
+						}
+					}
+				},
+				"company": {
+					"$id": "#/properties/orderInfo/properties/company",
+					"type": "string",
+					"title": "The Company Schema",
+					"default": "",
+					"examples": [
+						"Comcast Cable Communications"
+					],
+					"pattern": "^(.*)$"
+				}
+			}
+		},
+		"vendorOrderDetails": {
+			"$id": "#/properties/vendorOrderDetails",
+			"type": "array",
+			"title": "The Vendororderdetails Schema",
+			"items": {
+				"$id": "#/properties/vendorOrderDetails/items",
+				"type": "object",
+				"title": "The Items Schema",
+				"properties": {
+					"shipper": {
+						"$id": "#/properties/vendorOrderDetails/items/properties/shipper",
+						"type": "string",
+						"title": "The Shipper Schema",
+						"default": "",
+						"examples": [
+							"UPS"
+						],
+						"pattern": "^(.*)$"
+					},
+					"vendorOrderId": {
+						"$id": "#/properties/vendorOrderDetails/items/properties/vendorOrderId",
+						"type": "string",
+						"title": "The Vendororderid Schema",
+						"default": "",
+						"examples": [
+							"O-1228440"
+						],
+						"pattern": "^(.*)$"
+					},
+					"shippingMethod": {
+						"$id": "#/properties/vendorOrderDetails/items/properties/shippingMethod",
+						"type": "string",
+						"title": "The Shippingmethod Schema",
+						"default": "",
+						"examples": [
+							"Ground"
+						],
+						"pattern": "^(.*)$"
+					},
+					"shipmentTrackingDetails": {
+						"$id": "#/properties/vendorOrderDetails/items/properties/shipmentTrackingDetails",
+						"type": "array",
+						"title": "The Shipmenttrackingdetails Schema",
+						"items": {
+							"$id": "#/properties/vendorOrderDetails/items/properties/shipmentTrackingDetails/items",
+							"type": "object",
+							"title": "The Items Schema",
+							"required": [
+								"shipDate",
+								"trackingNumber"
+							],
+							"properties": {
+								"shipDate": {
+									"$id": "#/properties/vendorOrderDetails/items/properties/shipmentTrackingDetails/items/properties/shipDate",
+									"type": "string",
+									"title": "The Shipdate Schema",
+									"default": "",
+									"examples": [
+										"2019-06-16"
+									],
+									"pattern": "^(.*)$"
+								},
+								"trackingNumber": {
+									"$id": "#/properties/vendorOrderDetails/items/properties/shipmentTrackingDetails/items/properties/trackingNumber",
+									"type": "string",
+									"title": "The Trackingnumber Schema",
+									"default": "",
+									"examples": [
+										"1Z5498364295649990"
+									],
+									"pattern": "^(.*)$"
+								}
+							}
+						}
+					},
+					"vendorOrderStatus": {
+						"$id": "#/properties/vendorOrderDetails/items/properties/vendorOrderStatus",
+						"type": "string",
+						"title": "The Vendororderstatus Schema",
+						"default": "",
+						"examples": [
+							"partially shipped"
+						],
+						"pattern": "^(.*)$"
+					}
+				}
+			}
+		}
+	}
+}

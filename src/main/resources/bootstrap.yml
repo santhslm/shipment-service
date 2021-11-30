@@ -1,0 +1,10 @@
+spring:
+  profiles.active: dev
+  application.name: shipment-service, security-service
+---
+
+spring:
+  profiles: dev
+  cloud.config:
+      enabled: false
+      uri: http://localhost:8888

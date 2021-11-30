@@ -1,0 +1,74 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "deviceDetail"
+  ],
+  "properties": {
+    "deviceDetail": {
+      "$id": "#/properties/deviceDetail/items/properties",
+      "type": "array",
+      "title": "The deviceDetail Schema",
+      "items": {
+        "$id": "#/properties/deviceDetail/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "deviceMake",
+          "deviceModel",
+          "deviceType"
+        ],
+        "properties": {
+          "deviceMake": {
+            "$id": "#/properties/deviceDetail/items/properties/deviceMake",
+            "type": "string",
+            "title": "The Devicemake Schema",
+            "default": "",
+            "examples": "ALGO",
+            "pattern": "^(.*)$"
+          },
+          "deviceModel": {
+            "$id": "#/properties/deviceDetail/items/properties/deviceModel",
+            "type": "string",
+            "title": "The Devicemodel Schema",
+            "default": "",
+            "examples": "8180",
+            "pattern": "^(.*)$"
+          },
+          "deviceType": {
+            "$id": "#/properties/deviceDetail/items/properties/deviceType",
+            "type": "string",
+            "title": "The Devicetype Schema",
+            "default": "",
+            "examples": "Loud Ringer",
+            "pattern": "^(.*)$"
+          },
+          "resourceId": {
+            "$id": "#/properties/deviceDetail/items/properties/resourceId",
+            "type": "string",
+            "title": "The resourceId Schema",
+            "default": "0",
+            "examples": "124565656565"
+          },
+          "quantity": {
+            "$id": "#/properties/deviceDetail/items/properties/quantity",
+            "type": "int",
+            "title": "The quantity of Product",
+            "default": 1,
+            "examples": 1
+          },
+		  "deviceName": {
+            "$id": "#/properties/deviceDetail/items/properties/deviceName",
+            "type": "int",
+            "title": "The deviceName of Product",
+            "default": 1,
+            "examples": 1
+          }
+        }
+      }
+    }
+  }
+}

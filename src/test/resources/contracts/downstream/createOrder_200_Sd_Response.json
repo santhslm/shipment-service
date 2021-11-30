@@ -1,0 +1,28 @@
+{
+   "deviceDetail":[
+      {
+         "deviceMake":"Polycom",
+         "deviceModel":"IP Phone",
+         "deviceType":"VVX 500",
+         "resourceId":"12345666",
+         "quantity":0,
+         "deviceName":"Polycom SoundPoint VVX 500 HD"
+      },
+      {
+         "deviceMake":"Polycom",
+         "deviceModel":"IP Phone",
+         "deviceType":"VVX 310",
+         "resourceId":"12345688",
+         "quantity":0,
+         "deviceName":"Polycom VVX 310"
+      },
+      {
+         "deviceMake":"Polycom",
+         "deviceModel":"IP Phone",
+         "deviceType":"SoundPoint 670 HD",
+         "resourceId":"123456799",
+         "quantity":0,
+         "deviceName":"Polycom SoundPoint 670 HD"
+      }
+   ]
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<springProperty scope="context" name="springAppName"
+		source="spring.application.name" />
+	<property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${springAppName}" />
+	​
+	  <!--Setting logstash hostname from config file. -->
+    <springProperty scope="context" name="logstash_hostname"
+        source="logstash.tcpConfig.hostname" />
+  
+    <!--Setting logstash port from config file. -->
+    <springProperty scope="context" name="logstash_port"
+        source="logstash.tcpConfig.port" />
+    <property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${springAppName}" />
+     
+    <!--Setting appender for console logs to show logs in CF. -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!--<jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/> -->
+            <fieldNames>
+                <message>log_message</message>
+            </fieldNames>
+        </encoder>
+    </appender>
+  
+    <!--Setting appender for logs to be pushed to logstash directly over TCP.-->
+    <appender name="stash"
+        class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <remoteHost>${logstash_hostname}</remoteHost>
+        <port>${logstash_port}</port>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!--<jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>  for printing logs in pretty json format, helpful while debugging in local-->
+            <fieldNames>
+                <message>log_message</message>
+            </fieldNames>
+        </encoder>
+    </appender>
+		
+	<springProperty scope="context" name="springActiveProfile" 
+		source="spring.profiles.active"/>
+		
+	<appender name="auditlog"
+		class="com.comcast.orion.logging.appender.AuditLogAppender">
+		<layout>
+			<pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n
+			</pattern>
+		</layout>
+		
+		<queueName>auditlog.shipment-service.queue</queueName>
+		<exchange>auditlog.exchange</exchange>
+		<routingKey>shipment-service.service</routingKey>		
+		<auditLogEnabled>true</auditLogEnabled>
+		<!-- <serviceInstanceId>shipment-rabbitmq</serviceInstanceId>  -->	
+		<serviceInstanceId>OMW-RabbitMQ</serviceInstanceId>
+		<profile>${springActiveProfile}</profile>
+				
+		<!--<queueName>auditlog.shipment-service.queue</queueName>
+		<exchange>auditlog.exchange</exchange>
+		<routingKey>shipment-service.service</routingKey>		
+		<auditLogEnabled>true</auditLogEnabled>
+		<serviceInstanceId>Orion-RabbitMQ</serviceInstanceId>	
+		 <profile>${springActiveProfile}</profile> -->
+	</appender>
+
+	<appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="auditlog" />
+	</appender>
+
+	<logger name="com.comcast.orion.logging.messaging" level="INFO"
+		additivity="false">
+		<appender-ref ref="async" />
+	</logger>
+	
+	<logger name="com.comcast.orion.logging" level="INFO"
+		additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="stash" />
+	</logger>
+
+	<logger name="com.comcast.orion.shipment-service" level="INFO"
+		additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="stash" />
+	</logger>​
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<appender-ref ref="stash" />
+	</root>
+</configuration>

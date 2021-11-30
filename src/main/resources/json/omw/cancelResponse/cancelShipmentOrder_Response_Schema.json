@@ -1,0 +1,58 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "cancelShipmentOrderResponse"
+  ],
+  "properties": {
+    "cancelShipmentOrderResponse": {
+      "$id": "#/properties/cancelShipmentOrderResponse",
+      "type": "array",
+      "title": "The cancelShipmentOrderResponse Schema",
+      "items": {
+        "$id": "#/properties/cancelShipmentOrderResponse/items/properties",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "orderNumber"
+        ],
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "orderNumber": {
+            "type": "string"
+          },
+          "transaction": {
+            "type": "object",
+            "properties": {
+              "externalTransactionId": {
+                "type": "string"
+              },
+              "purchaseOrderNumber": {
+                "type": "string"
+              }
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

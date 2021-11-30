@@ -1,0 +1,10 @@
+{
+  "designId": "string",
+  "devices": [
+    {
+      "armResourceId": "string",
+      "macAddress": "string",
+      "serialNumber": "string"
+    }
+  ]
+}

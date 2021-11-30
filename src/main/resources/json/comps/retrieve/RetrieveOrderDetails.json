@@ -1,0 +1,45 @@
+{
+  "orderInfo": {
+    "company": "string",
+    "lineItems": {
+      "lineItem": [
+        {
+          "firstName": "string",
+          "lastName": "string",
+          "macAddress": "string",
+          "productName": "string",
+          "serialNumber": "string"
+        }
+      ]
+    },
+    "vendorOrderDetails": {
+      "vendorOrderDetailInfo": [
+        {
+          "orderStatus": "string",
+          "shipmentTrackingDetails": {
+            "shipmentTrackingDetail": [
+              {
+                "deliveryDate": "string",
+                "deliveryLocation": "string",
+                "deliveryName": "string",
+                "shipDate": "string",
+                "trackingNumber": "string"
+              }
+            ]
+          },
+          "shipper": "UPS",
+          "shippingMethod": "string",
+          "vendorOrderId": "string"
+        }
+      ]
+    }
+  },
+  "orderNumber": "string",
+  "orderStatus": "OPEN",
+  "status": {
+    "messages": [
+      "string"
+    ],
+    "resultCode": "string"
+  }
+}

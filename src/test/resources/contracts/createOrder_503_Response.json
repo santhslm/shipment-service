@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "code": "CONNECTIVITY_ERROR",
+      "message": "Not able to connect to SHIPMENTDATA"
+    }
+  ]
+}

@@ -1,0 +1,468 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "shipmentOrder"
+  ],
+  "properties": {
+    "shipmentOrder": {
+      "$id": "#/properties/shipmentOrder",
+      "type": "object",
+      "title": "The shipmentOrder Schema",
+      "required": [
+        "purchaseOrderNumber",
+        "additionalAttributes",
+        "lineItems"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#/properties/shipmentOrder/properties/id",
+          "type": "int",
+          "title": "Internal Order ID",
+          "default": 0,
+          "examples": 123456789012
+        },
+        "purchaseOrderNumber": {
+          "$id": "#/properties/shipmentOrder/properties/purchaseOrderNumber",
+          "type": "string",
+          "title": "The Purchaseordernumber Schema",
+          "default": "",
+          "examples": "ORION-PO-123",
+          "pattern": "^(.*)$"
+        },
+        "compsOrderNumber": {
+          "$id": "#/properties/shipmentOrder/properties/compsOrderNumber",
+          "type": "string",
+          "title": "The compsOrderNumber Schema",
+          "default": "",
+          "examples": "ORION-PO-123",
+          "pattern": "^(.*)$"
+        },
+        "vendorOrderNumber": {
+          "$id": "#/properties/shipmentOrder/properties/vendorOrderNumber",
+          "type": "string",
+          "title": "The vendorOrderNumber Schema",
+          "default": "",
+          "examples": "ORION-PO-123",
+          "pattern": "^(.*)$"
+        },
+        "orderStatus": {
+          "$id": "#/properties/shipmentOrder/properties/orderStatus",
+          "type": "string",
+          "title": "The Purchaseordernumber Schema",
+          "default": "",
+          "examples": "ORION-PO-123",
+          "pattern": "^(.*)$"
+        },
+        "shipmentOrderDetail": {
+          "$id": "#/properties/shipmentOrder",
+          "type": "object",
+          "title": "The shipmentOrder Schema",
+          "properties": {
+            "id": {
+              "$id": "#/properties/shipmentOrder/properties/shipmentOrderDetail/properties/shipmentSystem/id",
+              "type": "int",
+              "title": "Internal  ID",
+              "default": 0,
+              "examples": 123456789012
+            },
+            "shipmentSystem": {
+              "$id": "#/properties/shipmentOrder/properties/shipmentOrderDetail/properties/shipmentSystem",
+              "type": "string",
+              "title": "The Shipmentsystem Schema",
+              "default": "NetX",
+              "examples": "NetX",
+              "enum": [
+                "NetX"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "productType": {
+              "$id": "#/properties/shipmentOrder/properties/shipmentOrderDetail/properties/productType",
+              "type": "string",
+              "title": "The Producttype Schema",
+              "default": "BVE",
+              "examples": "BVE",
+              "enum": [
+                "BVE"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "specialInstructions": {
+              "$id": "#/properties/shipmentOrder/properties/shipmentOrderDetail/properties/specialInstructions",
+              "type": "string",
+              "title": "The Specialinstructions Schema",
+              "default": "",
+              "examples": "Please ship ASAP",
+              "pattern": "^(.*)$"
+            },
+            "shippingOptions": {
+              "$id": "#/properties/shipmentOrder/properties/shipmentOrderDetail/properties/shippingOptions",
+              "type": "object",
+              "title": "The Shippingoptions Schema",
+              "required": [
+                "method",
+                "shipper",
+                "signatureRequired"
+              ],
+              "properties": {
+                "method": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingOptions/properties/method",
+                  "type": "string",
+                  "title": "The Method Schema",
+                  "default": "",
+                  "examples": "Ground",
+                  "enum": [
+                    "Ground",
+                    "3-day",
+                    "2-day",
+                    "Overnight",
+                    "Priority Overnight",
+                    "Overnight Early AM"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "shipper": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingOptions/properties/shipper",
+                  "type": "string",
+                  "title": "The Shipper Schema",
+                  "default": "",
+                  "examples": "UPS",
+                  "enum": [
+                    "UPS"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "signatureRequired": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingOptions/properties/signatureRequired",
+                  "type": "boolean",
+                  "title": "The Signaturerequired Schema",
+                  "default": false,
+                  "examples": [
+                    true
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "shippingAddress": {
+          "$id": "#/properties/shipmentOrder/properties/shippingAddress",
+          "type": "object",
+          "title": "The Shippingaddress Schema",
+          "required": [
+            "address"
+          ],
+          "shipingContact": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/id",
+                "type": "int",
+                "title": "Internal  ID",
+                "default": 0,
+                "examples": 123456789012
+              },
+              "company": {
+                "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/company",
+                "type": "string",
+                "title": "The Company Schema",
+                "default": "",
+                "examples": "PCF",
+                "pattern": "^(.*)$"
+              },
+              "firstName": {
+                "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/firstName",
+                "type": "string",
+                "title": "The Firstname Schema",
+                "default": "",
+                "examples": "first",
+                "pattern": "^(.*)$"
+              },
+              "lastName": {
+                "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/lastName",
+                "type": "string",
+                "title": "The Lastname Schema",
+                "default": "",
+                "examples": "last",
+                "pattern": "^(.*)$"
+              },
+              "phone": {
+                "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/phone",
+                "type": "string",
+                "title": "The Phone Schema",
+                "default": "",
+                "examples": "9871541665",
+                "pattern": "^(.*)$"
+              }
+            },
+            "address": {
+              "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address",
+              "type": "object",
+              "title": "The Address Schema",
+              "required": [
+                "addressLine1",
+                "city",
+                "state",
+                "zip"
+              ],
+              "properties": {
+                "id": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address/properties/id",
+                  "type": "int",
+                  "title": "Internal  ID",
+                  "default": 0,
+                  "examples": 123456789012
+                },
+                "addressLine1": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address/properties/addressLine1",
+                  "type": "string",
+                  "title": "The Addressline1 Schema",
+                  "default": "",
+                  "examples": "143 union blvd",
+                  "pattern": "^(.*)$"
+                },
+                "addressLine2": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address/properties/addressLine2",
+                  "type": "string",
+                  "title": "The Addressline2 Schema",
+                  "default": "",
+                  "examples": "suite 100",
+                  "pattern": "^(.*)$"
+                },
+                "city": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address/properties/city",
+                  "type": "string",
+                  "title": "The City Schema",
+                  "default": "",
+                  "examples": "lakewood",
+                  "pattern": "^(.*)$"
+                },
+                "state": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address/properties/state",
+                  "type": "string",
+                  "title": "The State Schema",
+                  "default": "",
+                  "examples": "CO",
+                  "pattern": "^(.*)$",
+                  "maxLength": 2,
+                  "minLength": 2
+                },
+                "zip": {
+                  "$id": "#/properties/shipmentOrder/properties/shippingAddress/properties/address/properties/zip",
+                  "type": "string",
+                  "title": "The Zip Schema",
+                  "default": "",
+                  "examples": "80123",
+                  "pattern": "^(.*)$",
+                  "maxLength": 5,
+                  "minLength": 5
+                }
+              }
+            }
+          }
+        },
+        "additionalAttributes": {
+          "$id": "#/properties/shipmentOrder/properties/additionalAttributes",
+          "type": "array",
+          "title": "The Additionalattributes Schema",
+          "items": {
+            "$id": "#/properties/shipmentOrder/properties/additionalAttributes/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/properties/shipmentOrder/properties/additionalAttributes/items/properties/id",
+                "type": "int",
+                "title": "Internal  ID",
+                "default": 0,
+                "examples": 123456789012
+              },
+              "name": {
+                "$id": "#/properties/shipmentOrder/properties/additionalAttributes/items/properties/name",
+                "type": "string",
+                "title": "The Name Schema",
+                "default": "",
+                "examples": "VMSDesignId",
+                "pattern": "^(.*)$"
+              },
+              "value": {
+                "$id": "#/properties/shipmentOrder/properties/additionalAttributes/items/properties/value",
+                "type": "string",
+                "title": "The Value Schema",
+                "default": "",
+                "examples": "123",
+                "pattern": "^(.*)$"
+              }
+            }
+          }
+        },
+        "lineItems": {
+          "$id": "#/properties/shipmentOrder/properties/lineItems",
+          "type": "array",
+          "title": "The Lineitems Schema",
+          "items": {
+            "$id": "#/properties/shipmentOrder/properties/lineItems/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "deviceMake",
+              "deviceModel",
+              "deviceType",
+              "resourceId"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/id",
+                "type": "int",
+                "title": "Internal  ID",
+                "default": 0,
+                "examples": 123456789012
+              },
+              "deviceMake": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/deviceMake",
+                "type": "string",
+                "title": "The Devicemake Schema",
+                "default": "",
+                "examples": "ALGO",
+                "pattern": "^(.*)$"
+              },
+              "deviceModel": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/deviceModel",
+                "type": "string",
+                "title": "The Devicemodel Schema",
+                "default": "",
+                "examples": "8180",
+                "pattern": "^(.*)$"
+              },
+              "deviceType": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/deviceType",
+                "type": "string",
+                "title": "The Devicetype Schema",
+                "default": "",
+                "examples": "Loud Ringer",
+                "pattern": "^(.*)$"
+              },
+              "resourceId": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/resourceId",
+                "type": "string",
+                "title": "The resourceId Device",
+                "default": "0",
+                "examples": "124565656565"
+              },
+              "quantity": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/quantity",
+                "type": "int",
+                "title": "The quantity of Device",
+                "default": 1,
+                "examples": 1
+              },
+              "deviceName": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/deviceName",
+                "type": "string",
+                "title": "The deviceName of Device",
+                "default": 1,
+                "examples": 1
+              },
+              "firstName": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/firstName",
+                "type": "string",
+                "title": "The firstName to whom Device assigned",
+                "default": "",
+                "examples": "firstName"
+              },
+              "lastName": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/lastName",
+                "type": "string",
+                "title": "The lastName to whom Device assigned",
+                "default": "",
+                "examples": "lastName"
+              },
+              "macAddress": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/macAddress",
+                "type": "string",
+                "title": "The macAddress of Device",
+                "default": "",
+                "examples": "C0-B6-F9-D2-31-5C"
+              },
+              "serialNumber": {
+                "$id": "#/properties/shipmentOrder/properties/lineItems/items/properties/serialNumber",
+                "type": "string",
+                "title": "The serialNumber of Device",
+                "default": "",
+                "examples": "10-65-30-76-DA-39"
+              }
+            }
+          }
+        },
+        "shipmentTrackingDetails": {
+          "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails",
+          "type": "array",
+          "title": "The shipmentTrackingDetails Schema",
+          "items": {
+            "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "trackingNumber"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items/properties/id",
+                "type": "int",
+                "title": "Internal  ID",
+                "default": 0,
+                "examples": 123456789012
+              },
+              "deliverDate": {
+                "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items/properties/deliveryDate",
+                "type": "string",
+                "title": "The deliveryDate of the Shipment",
+                "default": "",
+                "examples": "08/30/2019",
+                "pattern": "^(.*)$"
+              },
+              "deliverLocation": {
+                "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items/properties/deliveryLocation",
+                "type": "string",
+                "title": "The deliveryLocation Schema",
+                "default": "",
+                "examples": "Doorstep",
+                "pattern": "^(.*)$"
+              },
+              "deliverName": {
+                "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items/properties/deliverName",
+                "type": "string",
+                "title": "The deliverName Schema",
+                "default": "",
+                "examples": "FistName LastName",
+                "pattern": "^(.*)$"
+              },
+              "trackingNumber": {
+                "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items/properties/trackingNumber",
+                "type": "string",
+                "title": "The trackingNumber of Shipment",
+                "default": "",
+                "examples": "124565656565"
+              },
+              "shipDate": {
+                "$id": "#/properties/shipmentOrder/properties/shipmentTrackingDetails/items/properties/shipDate",
+                "type": "string",
+                "title": "The shipDate of Shipment",
+                "default": "",
+                "examples": "08/21/2019"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

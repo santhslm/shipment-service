@@ -1,0 +1,14 @@
+name: "should return CreateOrder contract error Response"
+request:
+  method: POST
+  url: /shipmentService/v1/createShipmentOrder
+  bodyFromFile: createOrder_400_Request.json
+  headers:
+    Content-Type: application/json
+    trackingId: 111122
+    sourceSystemId: Netx
+response:
+  status: 400
+  bodyFromFile: createOrder_400_Response.json
+  headers:
+    Content-Type: application/json;charset=UTF-8

@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "code": "CONTRACT_VALIDATION_ERROR",
+      "message": "createShipmentOrder[0].shippingOptions : must not be null"
+    }
+  ]
+}

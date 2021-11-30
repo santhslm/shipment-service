@@ -1,0 +1,367 @@
+spring:
+  profiles.active: dev
+---
+######################################################################################################
+# Orion configuration
+######################################################################################################
+oauth:
+  server:
+    url: https://websec-int.cable.comcast.com/as/token.oauth2
+authServer:
+  publicKey: -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyHtPtU4wlq70yhZ6RSvuhNSp3TqXaDu2jLnVtGasqV8Iybvgzlx6bWD4wbky9u7g5g8uX/HsCTTse/dhniAnvxWU5PW+jyVUSCN4UX98PSYH2C/QhLrJD6wzQ4CTJxJq7uhfZLkpgJJAl7vr8qLegsYzYg2LC5x/uu7e/QtJfSxmvpGDNyrj3rvWKkodghXWkYQ+qrv7k5vii20pRnnKsN6JfKCTNCVp0Sz5h49ko+x1buTe4dOYpqM067bDk1bgf2kI7MoqJ3e+p9yHgJs+K3BVOKUPPaLBtSMJokGxdyYwND8MltmvCuAmMYhGENuWQpwtca/JotojpPxHxn3rQIDAQAB-----END PUBLIC KEY-----
+  scope: orion:orion-dev,orion:notifications,orion:order
+  
+xsp.security.rest.authenticated.paths: /tempshipmentService/v1/** 
+  
+# Dev Configuration
+spring:
+  profiles: dev
+  application.name: shipment-service
+  
+eureka:
+   client:
+      serviceUrl:
+         defaultZone: https://orionregistry-service-dev.u1.app.cloud.comcast.net/eureka   
+  
+eureka.client.enabled:  true
+
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework.web: WARN
+    com.comcast.orion: DEBUG
+  file: logs/shipment-service.log
+   
+ 
+xsp:
+  security:
+    authServer:
+      configs:
+       - endpointPatterns: localhost,orion,orion-gateway,data
+         username: orion_dev
+         secret: c02af9ff99dc45019fcba878fc90cb10
+         scopes: orion:orion-dev
+       - endpointPatterns: vms
+         username: vms_dev
+         secret: 037b5b9d15f5431a90e63e831479cc4f
+         scopes: vms:service    
+        
+server:
+  port: 9001
+hystrix: 
+  command: 
+    default: 
+      circuitBreaker: 
+        enabled: true
+        errorThresholdPercentage: 55
+        forceClosed: false
+        forceOpen: false
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds: 100
+      execution: 
+        timeout:
+          enabled: false
+        isolation: 
+          semaphore: 
+            maxConcurrentRequests: 100
+          thread: 
+            interruptOnCancel: false
+            interruptOnTimeout: 1000
+            timeoutInMilliseconds: 30000
+      fallback: 
+        enabled: true
+        isolation: 
+          semaphore: 
+            maxConcurrentRequests: 100
+        timeout: 
+          enabled: true
+      metrics: 
+        healthSnapshot: 
+          intervalInMilliseconds: 500
+        rollingPercentile: 
+          bucketSize: 100
+          enabled: true
+          numBuckets: 6
+          timeInMilliseconds: 60000
+        rollingStats: 
+          numBuckets: 10
+          timeInMilliseconds: 10000
+      requestCache: 
+        enabled: false
+      requestLog: 
+        enabled: false
+    downstreamOperationHystrix: 
+      circuitBreaker: 
+        errorThresholdPercentage: 55
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds: 100
+      execution: 
+        timeout:
+          enabled: false
+        isolation:
+          thread: 
+            timeoutInMilliseconds: 30000
+      metrics: 
+        healthSnapshot: 
+          intervalInMilliseconds: 500
+        rollingPercentile: 
+          bucketSize: 100
+          enabled: true
+          numBuckets: 6
+          timeInMilliseconds: 60000
+        rollingStats: 
+          numBuckets: 10
+          timeInMilliseconds: 10000
+      requestCache: 
+        enabled: false
+      requestLog: 
+        enabled: false
+  threadpool: 
+    downstreamOperationHystrix: 
+      allowMaximumSizeToDivergeFromCoreSize: false
+      coreSize: 10
+      keepAliveTimeMinutes: 1
+      maxQueueSize: -1
+      maximumSize: 10
+      queueSizeRejectionThreshold: 5
+service:
+    downstream:
+      readTimeout: 300000
+      connectionTimeout: 300000
+    shipmentData:
+      url: http://shipmentdata-dev.u1.app.cloud.comcast.net
+      #url: http://localhost:7007
+      retriveDeviceUri: /shipmentdata/v1/retrieveDeviceDetails
+      persistOrderUri: /shipmentdata/v1/persistShipmentOrder
+      getOrderDetails: /shipmentdata/v1/orderDetails
+      updateOrderUri: /shipmentdata/v1/orderStatus
+      sourceSystem: Amdocs
+    vms:
+      url: http://vmsdevice-dev.u1.app.cloud.comcast.net
+      #url: http://localhost:7007
+      bveRetriveDeviceUri: /vmsdevice/v1/bveRetrieveDevice
+      bveUpdateDeviceDetails: /bveDeviceUpdate
+      commonOTT:
+       'Yes': OTT
+       'No': Dedicated
+    comps:
+      url: https://comps-api-gateway-server-qa.u1.app.cloud.comcast.net/services/device-fulfilment/18.06
+      #url: http://localhost:7007
+      cancelOrder: /api/cancelOrder
+      createOrder: /api/createOrder
+      retrieveOrder: /api/getOrder/{orderNumber}/{isIncludeShipmentDetails}
+      credential: Y29tcHNidmV1c2VyOjEyMzQ1Njc4
+    onp:
+      url: http://orion-gateway-dev.u1.app.cloud.comcast.net/onp/v1/sendNotification
+      #url: http://localhost:7007/onp/v1/sendNotification
+      shipmentStatusEventName: SHIPMENT_STATUS_NOTIFICATION
+      source: Amdocs
+      failurenotificationType: FAILURE
+      successnotificationType: PROCESSING
+      cancelnotificationType: CANCELLED
+      failureStatus: FAILURE
+      successStatus: SUCCESS
+      
+devices:
+  wanupgradesupport: Edgewater_Networks-ESG-4550-5       
+  upgradesizes: 5,10,15,30,70    
+shipmentservice:
+  createOrder:
+      status: SUCCESS
+      message: Request Sent to DownStream-ONP Successfully
+      serviceError: ERROR
+int: 
+  threadPoolTaskExecutor: 
+    corePoolSize: 15
+    maxPoolSize: 30 
+  aggregator: 
+    sendTimeout: 3000   
+    
+contractstubs: 
+  port: 7007
+  type: cloudContract
+  tescases: 
+ #create Order success scenario
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /shipmentdata/v1/retrieveDeviceDetails
+        requestBodyJSON: createOrder_200_Sd_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: createOrder_200_Sd_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json     
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /bveRetrieveDevice
+        requestBodyJSON: createOrder_200_VMS_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: createOrder_200_VMS_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /api/createOrder
+        requestBodyJSON: createOrder_200_COMPS_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: createOrder_200_COMPS_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json             
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /shipmentdata/v1/persistShipmentOrder
+        requestBodyJSON: createOrder_200_SdPersist_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: createOrder_200_SdPersist_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /onp/v1/sendNotification
+        requestBodyJSON: createOrder_200_ONP_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: createOrder_200_ONP_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json
+# Cancel Order mocks for Success scenario      
+    - method: 
+      methodType: GET
+      requestContents:
+        path: /shipmentdata/v1/orderDetails
+        matchParameters: # If its GET
+            vendorOrderId : O-1237186
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: cancelOrder_200_Sd_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json    
+    - method: 
+      methodType: DELETE
+      requestContents:
+        path: /api/cancelOrder
+        requestBodyJSON: cancelOrder_200_COMPS_Request.json
+        matchParameters: # If its GET
+             NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: cancelOrder_200_COMPS_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json               
+    - method: 
+      methodType: PUT
+      requestContents:
+        path: /shipmentdata/v1/orderStatus
+        requestBodyJSON: cancelOrder_200_SdPersist_Request.json
+        matchParameters: # If its GET
+             NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: cancelOrder_200_SdPersist_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /onp/v1/sendNotification
+        requestBodyJSON: cancelOrder_200_ONP_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: cancelOrder_200_ONP_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json            
+#create order 503 error            
+    - method: 
+      methodType: POST
+      requestContents:
+        path: /shipmentdata/v1/retrieveDeviceDetails
+        requestBodyJSON: createOrder_503_Sd_Request.json
+        matchParameters: # If its GET
+             NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: createOrder_503_Sd_Response.json
+        fixedDelay: 0
+        httpStatusCode: 404        
+        responseHeaders: 
+            Content-Type: application/json   
+#cancel order 503 error
+    - method: 
+      methodType: GET
+      requestContents:
+        path: /shipmentdata/v1/orderDetails
+        matchParameters: # If its GET
+            vendorOrderId : O-1235461
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: cancelOrder_503_Sd_Response.json
+        fixedDelay: 0
+        httpStatusCode: 404        
+        responseHeaders: 
+            Content-Type: application/json   
+    - method: 
+      methodType: DELETE
+      requestContents:
+        path: /api/cancelOrder
+        requestBodyJSON: cancelOrder_503_COMPS_Request.json
+        matchParameters: # If its GET
+            NA : NA
+        requestHeaders: 
+            Content-Type: application/json
+      reponseContents:
+        responseBodyJSON: cancelOrder_503_COMPS_Response.json
+        fixedDelay: 0
+        httpStatusCode: 200        
+        responseHeaders: 
+            Content-Type: application/json                                       

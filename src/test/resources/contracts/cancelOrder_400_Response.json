@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "code": "CONTRACT_VALIDATION_ERROR",
+      "message": "cancelShipmentOrder[0].orderNumber : must not be null"
+    }
+  ]
+}

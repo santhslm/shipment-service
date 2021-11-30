@@ -1,0 +1,52 @@
+{
+   "createShipmentOrder":[
+      {
+         "purchaseOrderNumber":"ORION-PO-123",
+         "specialInstructions":"Please ship ASAP",
+         "shipmentSystem":"NetX",
+         "productType":"BVE",
+         "shippingAddress":{
+            "company":"PCF",
+            "firstName":"Hello",
+            "lastName":"World",
+            "phone":"9871541665",
+            "address":{
+               "addressLine1":"143 union blvd",
+               "city":"lakewood",
+               "state":"CO",
+               "zip":"80123"
+            }
+         },
+         "additionalAttributes":[
+            {
+               "name":"VMSDesignId",
+               "value":"46764488"
+            },
+            {
+               "name":"ServiceId",
+               "value":"Serv12345"
+            }
+         ],
+         "lineItems":[
+            {
+               "deviceMake":"Polycom",
+               "deviceModel":"IP Phone",
+               "deviceType":"VVX 500",
+               "resourceId":"12345666"
+            },
+            {
+               "deviceMake":"Polycom",
+               "deviceModel":"IP Phone",
+               "deviceType":"VVX 310",
+               "resourceId":"12345688"
+            },
+            {
+               "deviceMake":"Polycom",
+               "deviceModel":"IP Phone",
+               "deviceType":"SoundPoint 670 HD",
+               "resourceId":"123456799"
+            }
+         ]
+      }
+   ]
+}

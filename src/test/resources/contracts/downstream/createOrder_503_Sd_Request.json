@@ -1,0 +1,10 @@
+{
+   "deviceDetail":[
+      {
+         "deviceMake":"Polycom",
+         "deviceModel":"IP Phone",
+         "deviceType":"VVX 500",
+         "resourceId":"12345666"
+      }
+   ]
+}

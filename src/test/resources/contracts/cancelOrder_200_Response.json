@@ -1,0 +1,12 @@
+{
+  "cancelShipmentOrderResponse": [
+    {
+      "status": "SUCCESS",
+      "orderNumber": "O-1237186",
+      "transaction": {
+        "externalTransactionId": "111122",
+        "purchaseOrderNumber": "ORION-PO-123"
+      }
+    }
+  ]
+}

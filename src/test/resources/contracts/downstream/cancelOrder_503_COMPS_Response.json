@@ -1,0 +1,12 @@
+{
+    "transaction": {
+        "transactionNumber": "9294",
+        "externalTransactionId": "111222"
+    },
+    "status": {
+        "resultCode": "00000",
+        "messages": [
+            "Success"
+        ]
+    }
+}

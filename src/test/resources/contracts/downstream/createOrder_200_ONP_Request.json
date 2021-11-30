@@ -1,0 +1,17 @@
+{
+   "status":"SUCCESS",
+   "orderNumber":"ABC-5386",
+   "orderStatus":"Open",
+   "transaction":{
+      "externalTransactionId":"111222",
+      "purchaseOrderNumber":"ORION-PO-123"
+   },
+   "vendorOrderDetails":[
+      {
+         "shipper":"UPS",
+         "vendorOrderId":"O-1237176",
+         "shippingMethod":"Ground",
+         "vendorOrderStatus":"New"
+      }
+   ]
+}
